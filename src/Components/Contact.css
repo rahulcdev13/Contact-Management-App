@@ -1,9 +1,36 @@
-.footer{
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: gray;
-    color: white;
-    text-align: center;
+ 
+.contact-img{
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;  
+} 
+.add-contact{
+    margin-left: 150px;
+    margin-right: 150px;
+    margin-top: 50px;
+    border: 1px solid rgb(227, 230, 89);
+    padding: 25px;
+    box-shadow: 5px 8px #ffc107; 
+    /* background-color: #ffc107; */
 }
+.Allcontact{ 
+    margin-top: 50px;
+    border: 1px solid rgb(227, 230, 89);
+    padding: 20px;
+    box-shadow: 5px 8px #ffc107; 
+}
+.view-contact{ 
+    margin-top: 50px;
+    border: 1px solid rgb(227, 230, 89);
+    padding: 20px;
+    box-shadow: 5px 8px #ffc107; 
+}
+ 
+  .contact-allview-img{
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;  
+  } 
+  /* .contact-search{
+    background-color: aliceblue; 
+  } */
