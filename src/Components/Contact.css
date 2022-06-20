@@ -1,4 +1,14 @@
- 
+
+.warning{
+  margin-top: 100px;
+  border: 2px solid red;
+  box-shadow: 5px 8px #ffc107; 
+  padding: 25px;
+  margin-left: 400px;
+  margin-right: 400px;
+  color: white;
+
+}
 .contact-img{
   width: 200px;
   height: 200px;
@@ -26,9 +36,9 @@
     box-shadow: 5px 8px #ffc107; 
 }
  
-  .contact-allview-img{
-    width: 320px;
-    height: 320px;
+  .contact-view-img{
+    width: 270px;
+    height: 270px;
     border-radius: 50%;  
   } 
   /* .contact-search{

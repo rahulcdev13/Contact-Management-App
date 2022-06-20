@@ -1,22 +1,54 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "./Contact.css" 
+import { ContactService } from "../Services/ContactService";
+import Spinner from "../Spinners/Spinner";
+import "./Contact.css"
 
 const ContactList = () => {
+
+    const [state, setState] = useState({
+        loading: false,
+        Contacts: [],
+        errorMessage: ''
+    });
+
+    useEffect( async() => {
+        
+        try {
+            setState({ ...state, loading: true })
+            const response = await ContactService.getAllContacts();
+            // console.log(response);
+            setState({
+                ...state,
+                loading: false,
+                Contacts: response.data
+            })
+        } catch (error) {
+            setState({
+                ...state,
+                loading: true,
+                errorMessage: error.message
+            });
+        }
+    },[])
+
+    const { loading, Contacts, errorMessage } = state;
+
     return (
         <>
+            {/* <pre>{JSON.stringify(Contacts)}</pre> */}
             <section className="contact-search">
                 <div className="container">
                     <div className="grid">
                         <div className="row">
-                            {/* <div className="col">
-                                <p className="font-bold fst-italic">In this appliication user can add a contact, delete, update amd serach a contact. For storing data I have used a JSON server which is connected to the application in React js App..</p>
-                            </div> */}
+                            <div className="h6 mt-5">
+                                <p className="font-bold"> In this appliication user can add {errorMessage} a contact, delete, update amd serach a contact. For storing data I have used a JSON server which is connected to the application in React js App</p>
+                            </div>
                         </div><br />
                         <div className="row mx-auto">
                             <div className="col-md-8">
                                 <form className="d-flex" role="search">
-                                    <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                                    <input className="form-control me-2" type="search" placeholder="🔍 Search contact name ..." aria-label="Search" />
                                     <button className="btn btn-warning bg-orange" type="submit">Search</button>
                                 </form>
                             </div>
@@ -28,7 +60,7 @@ const ContactList = () => {
                             </div>
                             <div className="col-md-1">
                                 <p className="h5">
-                                    <Link to={'/contact/allview'} className="btn btn-warning ms-2"> <i className="fa fa-eye me-2"></i>All
+                                    <Link to={'/contact/allview/:contactId'} className="btn btn-warning ms-2"> <i className="fa fa-eye me-2"></i>All
                                     </Link>
                                 </p>
                             </div>
@@ -36,93 +68,64 @@ const ContactList = () => {
                     </div>
                 </div>
             </section><br />
-            <section className="contact-list">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-6">
-                            <div className="card">
-                                <div className="card-body">
-                                    <div className="row align-item-center d-flex justify-content-around me-2">
-                                        <div className="col-md-4">
-                                            <img src="https://www.pngkey.com/png/detail/44-448187_download-user-icon-png-clipart-computer-icons-user.png" alt="user" className="img-fluid contact-img" />
-                                        </div>
-                                        <div className="col-md-7">
-                                            <ul className="list-group">
-                                                <li className="list-group-item list-group-item-action">
-                                                    Name: <span className="fw-bold">Samat Chavan</span>
-                                                </li>
-                                                <li className="list-group-item list-group-item-action">
-                                                    Mobile No : <span className="fw-bold">8806440725</span>
-                                                </li>
-                                                <li className="list-group-item list-group-item-action">
-                                                    Email ID : <span className="fw-bold">SamatChavan@gmail.com</span>
-                                                </li>
-                                                <li className="list-group-item list-group-item-action">
-                                                    Compnay Name : <span className="fw-bold">Skylex technology</span>
-                                                </li> 
-                                            </ul>
-                                        </div>
-                                        <div className="col-md-1 align-item-center">
-                                            <Link className="btn btn-warning my-2" to={'/contact/view/:contactId'}>
-                                                <li className="fa fa-eye" />
-                                            </Link>
-                                            <Link className="btn btn-primary my-2" to={'/contact/edit/:contactId'}>
-                                                <li className="fa fa-edit " />
-                                            </Link> 
-                                            <Link className="btn btn-danger my-2" to={`/`}>
-                                                <li className="fa fa-trash me-0.5" />
-                                            </Link>  
-                                           
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+            {loading ? <Spinner /> : <>
+                <section className="contact-list">
+                    <div className="container">
+                        <div className="row">
+
+                            {
+                                Contacts.length > 0 &&
+                                Contacts.map((contactVal,id) => {
+                                    return (
+                                        <>
+                                            <div className="col-md-6" key={contactVal.id}>
+                                                <div className="card my-2">
+                                                    <div className="card-body">
+                                                        <div className="row align-item-center d-flex justify-content-around me-2">
+                                                            <div className="col-md-4">
+                                                                <img src={contactVal.photo} alt="user" className="img-fluid contact-img" />
+                                                            </div>
+                                                            <div className="col-md-7">
+                                                                <ul className="list-group">
+                                                                    <li className="list-group-item list-group-item-action">
+                                                                        Name: <span className="fw-bold">{contactVal.name}</span>
+                                                                    </li>
+                                                                    <li className="list-group-item list-group-item-action">
+                                                                        Mobile No : <span className="fw-bold">{contactVal.mobile}</span>
+                                                                    </li>
+                                                                    <li className="list-group-item list-group-item-action">
+                                                                        Email ID : <span className="fw-bold">{contactVal.email}</span>
+                                                                    </li>
+                                                                    <li className="list-group-item list-group-item-action">
+                                                                        Title : <span className="fw-bold">{contactVal.title}</span>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div className="col-md-1 align-item-center">
+                                                                <Link className="btn btn-warning my-2" to={`/contact/view/${contactVal.id}`}>
+                                                                    <li className="fa fa-eye" />
+                                                                </Link>
+                                                                <Link className="btn btn-primary my-2" to={'/contact/edit/:contactId'}>
+                                                                    <li className="fa fa-edit " />
+                                                                </Link>
+                                                                <Link className="btn btn-danger my-2" to={`/`}>
+                                                                    <li className="fa fa-trash me-0.5" />
+                                                                </Link>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )
+                                })
+                            }
                         </div>
-                        <div className="col-md-6">
-                            <div className="card">
-                                <div className="card-body">
-                                    <div className="row align-item-center d-flex justify-content-around me-2">
-                                        <div className="col-md-4">
-                                            <img src="https://freepngimg.com/thumb/facebook/62681-flat-icons-face-computer-design-avatar-icon.png" alt="user" className="img-fluid contact-img" />
-                                        </div>
-                                        <div className="col-md-7">
-                                            <ul className="list-group">
-                                                <li className="list-group-item list-group-item-action">
-                                                    Name: <span className="fw-bold">Samat Chavan</span>
-                                                </li>
-                                                <li className="list-group-item list-group-item-action">
-                                                    Mobile No : <span className="fw-bold">8806440725</span>
-                                                </li>
-                                                <li className="list-group-item list-group-item-action">
-                                                    Email ID : <span className="fw-bold">SamatChavan@gmail.com</span>
-                                                </li>
-                                                <li className="list-group-item list-group-item-action">
-                                                    Compnay Name : <span className="fw-bold">Skylex technology</span>
-                                                </li> 
-                                            </ul>
-                                        </div>
-                                        <div className="col-md-1 align-item-center">
-                                            <Link className="btn btn-warning my-2" to={'/contact/view/:contactId'}>
-                                                <li className="fa fa-eye" />
-                                            </Link>
-                                            <Link className="btn btn-primary my-2" to={'/contact/edit/:contactId'}>
-                                                <li className="fa fa-edit " />
-                                            </Link> 
-                                            <Link className="btn btn-danger my-2" to={`/`}>
-                                                <li className="fa fa-trash me-0.5" />
-                                            </Link>  
-                                           
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
                     </div>
-                </div>
+                </section>
 
+            </>}
 
-            </section>
         </>
     )
 }

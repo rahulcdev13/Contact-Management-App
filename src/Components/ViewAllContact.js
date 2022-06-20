@@ -28,7 +28,7 @@ const ViewAllContact = () => {
                                                     Email ID : <span className="fw-bold">SamatChavan@gmail.com</span>
                                                 </li>
                                                 <li className="list-group-item list-group-item-action">
-                                                    Compnay Name : <span className="fw-bold">Skylex technology</span>
+                                                    Title : <span className="fw-bold">Skylex technology</span>
                                                 </li>
                                             </ul>
                                         </div>
@@ -55,7 +55,7 @@ const ViewAllContact = () => {
                                                     Email ID : <span className="fw-bold">SamatChavan@gmail.com</span>
                                                 </li>
                                                 <li className="list-group-item list-group-item-action">
-                                                    Compnay Name : <span className="fw-bold">Skylex technology</span>
+                                                    Title : <span className="fw-bold">Skylex technology</span>
                                                 </li>
                                             </ul>
                                         </div>

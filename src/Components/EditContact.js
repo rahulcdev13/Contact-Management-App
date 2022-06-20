@@ -33,7 +33,7 @@ const EditContact = () => {
                             aria-label="Recipient's Email id"
                             aria-describedby="basic-addon2"
                         />
-                        <InputGroup.Text id="basic-addon2">Company Name</InputGroup.Text>
+                        <InputGroup.Text id="basic-addon2">Title</InputGroup.Text>
                         <FormControl id="basic-url" aria-describedby="basic-addon3" />
                     </InputGroup>
 
