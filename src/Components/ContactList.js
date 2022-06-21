@@ -5,10 +5,14 @@ import Spinner from "../Spinners/Spinner";
 import "./Contact.css"
 
 const ContactList = () => {
+    const [query,setQuery]=useState({
+        text:''
+    })
 
     const [state, setState] = useState({
         loading: false,
         Contacts: [],
+        filterContacts: [],
         errorMessage: ''
     });
 
@@ -20,7 +24,8 @@ const ContactList = () => {
             setState({
                 ...state,
                 loading: false,
-                Contacts: response.data
+                Contacts: response.data,
+                filterContacts:response.data
             })
         } catch (error) {
             setState({
@@ -52,14 +57,26 @@ const dltContact= async(contactId)=>{
             errorMessage: error.message
         });
     }
+};
 
+const searchContact =(event)=>{
+    setQuery({
+        ...query,text:event.target.value
+    });
+    let theContacts = state.Contacts.filter(contact=>{
+        return contact.name.toLowerCase().includes(event.target.value.toLowerCase()); 
+    })
+    console.log(theContacts);
+    setState({
+        ...state,
+        filterContacts:theContacts
+    })
 }
-
-    const { loading, Contacts, errorMessage } = state;
+    const { loading, Contacts, errorMessage,filterContacts } = state;
 
     return (
         <>
-            {/* <pre>{JSON.stringify(Contacts)}</pre> */}
+            <pre>{query.text}</pre>
             <section className="contact-search">
                 <div className="container">
                     <div className="grid">
@@ -71,7 +88,12 @@ const dltContact= async(contactId)=>{
                         <div className="row mx-auto">
                             <div className="col-md-8">
                                 <form className="d-flex" role="search">
-                                    <input className="form-control me-2" type="search" placeholder="🔍 Search contact name ..." aria-label="Search" />
+                                    <input className="form-control me-2" type="search" 
+                                    placeholder="🔍 Search contact name ..." 
+                                    aria-label="Search"
+                                    value={query.text}
+                                    name="text"
+                                    onChange={searchContact} />
                                     <button className="btn btn-warning bg-orange" type="submit">Search</button>
                                 </form>
                             </div>
@@ -97,8 +119,8 @@ const dltContact= async(contactId)=>{
                         <div className="row">
 
                             {
-                                Contacts.length > 0 &&
-                                Contacts.map((contactVal,id) => {
+                                filterContacts.length > 0 &&
+                                filterContacts.map((contactVal,id) => {
                                     return (
                                         <>
                                             <div className="col-md-6" key={contactVal.id}>
@@ -131,7 +153,7 @@ const dltContact= async(contactId)=>{
                                                                 <Link className="btn btn-primary my-2" to={`/contact/edit/${contactVal.id}`}>
                                                                     <li className="fa fa-edit " />
                                                                 </Link>
-                                                                <Link className="btn btn-danger my-2" onClick={()=>dltContact(contactVal.id)} to={`/`}>
+                                                                <Link className="btn btn-danger my-2" onClick={()=>dltContact(contactVal.id)} to={`/contact/list`}>
                                                                     <li className="fa fa-trash me-0.5" />
                                                                 </Link>
                                                             </div>
