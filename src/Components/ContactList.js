@@ -16,8 +16,7 @@ const ContactList = () => {
         
         try {
             setState({ ...state, loading: true })
-            const response = await ContactService.getAllContacts();
-            // console.log(response);
+            const response = await ContactService.getAllContacts(); 
             setState({
                 ...state,
                 loading: false,
@@ -30,7 +29,31 @@ const ContactList = () => {
                 errorMessage: error.message
             });
         }
-    },[])
+    },[]);
+
+const dltContact= async(contactId)=>{
+    try {
+        let response = await ContactService.deleteContact(contactId);
+        if(response){
+            setState({ ...state, loading: true })
+            const response = await ContactService.getAllContacts(); 
+            setState({
+                ...state,
+                loading: false,
+                Contacts: response.data
+            })
+        }
+        
+        
+    } catch (error) {
+        setState({
+            ...state,
+            loading: true,
+            errorMessage: error.message
+        });
+    }
+
+}
 
     const { loading, Contacts, errorMessage } = state;
 
@@ -105,10 +128,10 @@ const ContactList = () => {
                                                                 <Link className="btn btn-warning my-2" to={`/contact/view/${contactVal.id}`}>
                                                                     <li className="fa fa-eye" />
                                                                 </Link>
-                                                                <Link className="btn btn-primary my-2" to={'/contact/edit/:contactId'}>
+                                                                <Link className="btn btn-primary my-2" to={`/contact/edit/${contactVal.id}`}>
                                                                     <li className="fa fa-edit " />
                                                                 </Link>
-                                                                <Link className="btn btn-danger my-2" to={`/`}>
+                                                                <Link className="btn btn-danger my-2" onClick={()=>dltContact(contactVal.id)} to={`/`}>
                                                                     <li className="fa fa-trash me-0.5" />
                                                                 </Link>
                                                             </div>
