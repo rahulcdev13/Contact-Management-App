@@ -31,7 +31,8 @@ const AddContact = () => {
             }
         })
     }
-    useEffect(async () => {
+    useEffect(() => {
+        const loadData = async () => {
         try {
             setState({ ...state, loading: true })
             let response = await ContactService.getGroups();
@@ -47,7 +48,8 @@ const AddContact = () => {
                 loading: true,
                 errorMessage: error.message
             });
-        }
+        }}
+        loadData()
     }, []);
     const { loading, contact, errorMessage, groups } = state;
 

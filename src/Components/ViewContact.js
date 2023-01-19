@@ -17,8 +17,8 @@ const ViewContact = () => {
         group:{}
     });
 
-    useEffect(async () => {
-
+    useEffect( () => {
+        const loadData = async () => {
         try {
             setState({ ...state, loading: true })
             let response = await ContactService.getSingleContact(contactId);
@@ -36,7 +36,8 @@ const ViewContact = () => {
                 loading: true,
                 errorMessage: error.message
             });
-        }
+        }}
+        loadData()
 
     }, [contactId]);
 

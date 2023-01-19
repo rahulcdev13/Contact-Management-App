@@ -16,7 +16,8 @@ const ContactList = () => {
         errorMessage: ''
     });
 
-    useEffect( async() => {
+    useEffect(() => {
+        const loadData = async () => {
         
         try {
             setState({ ...state, loading: true })
@@ -33,7 +34,8 @@ const ContactList = () => {
                 loading: true,
                 errorMessage: error.message
             });
-        }
+        }}
+        loadData()
     },[]);
 
 const dltContact= async(contactId)=>{

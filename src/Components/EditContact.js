@@ -28,8 +28,8 @@ const EditContact = () => {
 
     });
 
-    useEffect(async () => {
-
+    useEffect( () => {
+        const loadData = async () => {
         try {
             setState({ ...state, loading: true })
             let response = await ContactService.getSingleContact(contactId);
@@ -47,8 +47,8 @@ const EditContact = () => {
                 loading: true,
                 errorMessage: error.message
             });
-        }
-
+        }}
+        loadData() 
     }, [contactId]);
 
     const updateInpute = (event) => {

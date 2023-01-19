@@ -19,6 +19,26 @@
       "title": "Fron-end Developer",
       "groupId": "2",
       "address": "BLOCK-B, 415 ,Fourth Floor and Seventh floor, above Mc Donalds, South Block, Wanwadi, Pune, Maharashtra 411040"
+    },
+    {
+      "name": "vinnu yadavv",
+      "mobile": "8806440724",
+      "photo": "https://chpic.su/_data/stickers/s/Succubus_blond/Succubus_blond_001.webp",
+      "email": "vinnuyadav@gmail.com",
+      "title": "Software developemett",
+      "groupId": "1",
+      "address": "Pune auranagbad 421546",
+      "id": "EyFlNF_"
+    },
+    {
+      "name": "Yogesh Sabankar",
+      "mobile": "88064251254",
+      "photo": "https://i.pinimg.com/564x/29/f8/36/29f836deb9350a805d63f638f83ca85a.jpg",
+      "email": "yogeshSabankar@yahoo.com",
+      "title": "Application developer",
+      "groupId": "1",
+      "address": "Auranagbad jalna 421325",
+      "id": "uni3rTY"
     }
   ],
   "groups": [
@@ -32,7 +52,7 @@
     },
     {
       "id": "3",
-      "name": "Brother"
+      "name": "family"
     }
   ]
 }
